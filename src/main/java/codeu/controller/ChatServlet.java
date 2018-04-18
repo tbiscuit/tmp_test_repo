@@ -142,13 +142,14 @@ public class ChatServlet extends HttpServlet {
 
     // this removes any HTML from the message content
     String cleanedMessageContent = Jsoup.clean(messageContent, Whitelist.none());
-
+    String bbBold = cleanedMessageContent.replaceAll("\\[b\\]", "<b>").replaceAll("\\[/b\\]", "</b>");
+    
     Message message =
         new Message(
             UUID.randomUUID(),
             conversation.getId(),
             user.getId(),
-            cleanedMessageContent,
+            bbBold,
             Instant.now());
 
     messageStore.addMessage(message);
